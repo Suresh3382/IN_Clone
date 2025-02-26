@@ -16,7 +16,7 @@ import AppRoutes from '../AppRoutes/AppRoutes';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
-    { key: '1', icon: <HomeFilled />, label: 'Home', },
+    { key: '/', icon: <HomeFilled />, label: 'Home' },
     { key: '2', icon: <SearchOutlined />, label: 'Search' },
     { key: '3', icon: <CompassFilled />, label: 'Explore' },
     { key: '4', icon: <PlayCircleOutlined />, label: 'Reel' },
@@ -29,16 +29,16 @@ const items: MenuItem[] = [
 const Layout = () => {
 
     return (
-        <div className='d-flex flex-row'>
-            <div style={{ width: "15%" }}>
+        <div style={{ display: "flex" }}>
+            <div style={{ width: "13%" }}>
                 <Menu
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={['/']}
                     mode="inline"
                     items={items}
                     style={{ height: '100vh' }}
                 />
             </div>
-            <div style={{ width: "85%" }}>
+            <div style={{ width: "87%", margin:"5px" }}>
                 <AppRoutes />
             </div>
         </div>
