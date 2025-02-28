@@ -10,19 +10,25 @@ namespace IN_Clone.Server.Controllers
     {
         public UserServices _userService;
 
-        public UserController(UserServices userService) {
+        public UserController(UserServices userService)
+        {
             _userService = userService;
         }
 
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn(User newuser)
         {
+            var existingUser = await _userService.GetUserbyEmail(newuser.Email);
             try
             {
-                var result = await _userService.CreateUserAsync(newuser);
-                return Ok(result);
+                if (existingUser == null)
+                {
+                    var result = await _userService.CreateUserAsync(newuser);
+                    return Ok(result);
+                }
+                return BadRequest("User with this Email already Exists");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -32,12 +38,11 @@ namespace IN_Clone.Server.Controllers
         public async Task<IActionResult> Login(Login loginuser)
         {
             var existingUser = await _userService.GetUserbyEmail(loginuser.Email);
-            if(existingUser != null && existingUser.Password == loginuser.Password)
+            if (existingUser != null && existingUser.Password == loginuser.Password)
             {
                 return Ok(existingUser);
             }
             return BadRequest("Invalid User");
         }
-   
     }
 }
