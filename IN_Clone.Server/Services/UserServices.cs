@@ -12,9 +12,9 @@ namespace IN_Clone.Server.Services
             var database = mongoClient.GetDatabase("Insta");
             userModel = database.GetCollection<User>("InstaCollection");
         }
-        public async Task<User> GetUserbyId(string Id)
+        public async Task<User> GetUserbyId(string userId)
         {
-            var user = await userModel.Find(x => x.UserId == Id).FirstOrDefaultAsync();
+            var user = await userModel.Find(x => x.UserId == userId).FirstOrDefaultAsync();
             return user;
         }
 
@@ -24,10 +24,16 @@ namespace IN_Clone.Server.Services
             return user;
         }
 
-        public async Task<User> GetUserbyEmail(string email)
+        public async Task<User> GetUserbyUserName(string username)
         {
-            var user = await userModel.Find(x => x.Email == email).FirstOrDefaultAsync();
+            var user = await userModel.Find(x => x.UserName == username).FirstOrDefaultAsync();
             return user;
+        }
+
+        public async Task<List<User>> GetAllUser()
+        {
+            var allUser = await userModel.Find(_ => true).ToListAsync();
+            return allUser;
         }
     }
 }
