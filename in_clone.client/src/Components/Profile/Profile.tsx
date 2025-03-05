@@ -51,7 +51,7 @@ const Profile = () => {
       <div className='mt-5 d-flex justify-content-center align-items-center'>
         <div className='d-flex  '>
       <div>
-        {/* <Avatar size={100} icon={<UserOutlined />} className='me-4' /> */}
+        <Avatar size={100} icon={<UserOutlined />} className='me-4' />
       </div>
           <div className='d-flex align-items-center'>
             <div>

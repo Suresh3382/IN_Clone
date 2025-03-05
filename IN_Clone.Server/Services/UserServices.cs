@@ -35,5 +35,30 @@ namespace IN_Clone.Server.Services
             var allUser = await userModel.Find(_ => true).ToListAsync();
             return allUser;
         }
+
+        public async Task<List<User>> FollowOrUnFollowUser(string followerId, string followingId)
+        {
+            var follower = await userModel.Find(u => u.UserId == followerId).FirstOrDefaultAsync();
+            var following = await userModel.Find(u => u.UserId == followingId).FirstOrDefaultAsync();
+
+            if (follower != null && following != null)
+            {
+                if (!follower.Following.Contains(followingId))
+                {
+                    follower.Following.Add(followingId);
+                    following.Follower.Add(followerId);
+                }
+                else
+                {
+                    follower.Following.Remove(followingId);
+                    following.Follower.Remove(followerId);
+                }
+
+                await userModel.ReplaceOneAsync(u => u.UserId == followerId, follower);
+                await userModel.ReplaceOneAsync(u => u.UserId == followingId, following);
+            }
+
+            return new List<User> { follower, following };
+        }
     }
 }

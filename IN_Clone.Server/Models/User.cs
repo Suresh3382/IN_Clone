@@ -14,6 +14,12 @@ namespace IN_Clone.Server.Models
 
         [BsonElement("email")]
         public string Email { get; set; }
+
+        [BsonElement("follower")]
+        public List<string>? Follower { get; set; }
+
+        [BsonElement("following")]
+        public List<string>? Following { get; set; }
     }
 
     public class Login

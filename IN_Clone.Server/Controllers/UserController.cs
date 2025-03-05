@@ -26,5 +26,14 @@ namespace IN_Clone.Server.Controllers
         [HttpGet("GetAllUser")]
         public async Task<List<User>> GetAllUser() =>
             await _userService.GetAllUser();
+
+        [HttpPost("FollowUser/{followerId}&{followingId}")]
+        public async Task<IActionResult> FollowUser(string followerId, string followingId)
+        {
+            var result = await _userService.FollowOrUnFollowUser(followerId, followingId);
+            return Ok(result);
+
+            [HttpPost("FollowUser/{followerId}&{followingId}")]
+
     }
-}
+    }

@@ -25,7 +25,7 @@ let loginValidation = object({
 
 const Login = () => {
   const navigate = useNavigate();
-  const {setIsLogin} = useContext<any>(UserContext);
+  const { setIsLogin } = useContext<any>(UserContext);
 
   const handleSubmit = async (values: ILogin) => {
     console.log(values);

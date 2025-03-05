@@ -5,7 +5,7 @@ import Login from "./loginSignup/Login";
 import Signup from "./loginSignup/Signup";
 import { ToastContainer } from "react-toastify";
 import UserContext from "./Context";
-import Home from "./Components/Home/Home";
+import { jwtTokenExpire } from "./Utils/tokenExpire";
 
 const App = () => {
     const navigate = useNavigate();
@@ -15,18 +15,17 @@ const App = () => {
     console.log(userId, userJwtToken);
 
     useEffect(() => {
-        if (!userJwtToken && !userId) {
+        if (!userJwtToken || jwtTokenExpire(userJwtToken)) {
+            localStorage.removeItem("JWTToken");
+            localStorage.removeItem("UserId");
             setIsLogin(false);
             navigate("/Login");
         }
-        else {
-            setIsLogin(true);
-        }
-    }, [userJwtToken])
+    }, []);
 
     return (
         <>
-            <UserContext.Provider value={{ isLogin }} >
+            <UserContext.Provider value={{ isLogin,setIsLogin }} >
                 {isLogin && <Layout />}
                 <ToastContainer />
                 <Routes>
