@@ -50,9 +50,9 @@ const Profile = () => {
     <div className='container' style={{ fontFamily: 'Poppins' }}>
       <div className='mt-5 d-flex justify-content-center align-items-center'>
         <div className='d-flex  '>
-      <div>
-        <Avatar size={100} icon={<UserOutlined />} className='me-4' />
-      </div>
+          <div>
+            <Avatar size={100} icon={<UserOutlined />} className='me-4' />
+          </div>
           <div className='d-flex align-items-center'>
             <div>
               <div className='d-flex align-items-center gap-3'>
@@ -61,9 +61,18 @@ const Profile = () => {
                 <SettingOutlined />
               </div>
               <div className='d-flex mt-3 gap-4'>
-                <p className='mb-0'>posts</p>
-                <p className='mb-0'>followers</p>
-                <p className='mb-0'>following</p>
+                <div className='d-flex gap-2'>
+                  <p>0  </p>
+                  <p className='mb-0'>posts</p>
+                </div>
+                <div className='d-flex gap-2'>
+                  <p>{userData?.follower?.length == 0 ? "0" : userData?.follower?.length}</p>
+                  <p className='mb-0'>followers</p>
+                </div>
+                <div className='d-flex gap-2'>
+                  <p>{userData?.following?.length == 0 ? "0" : userData?.following?.length}</p>
+                  <p className='mb-0'>following</p>
+                </div>
                 <div>
                   {/* <p>{userData.bio}</p> */}
                 </div>

@@ -9,10 +9,9 @@ import { jwtTokenExpire } from "./Utils/tokenExpire";
 
 const App = () => {
     const navigate = useNavigate();
-    const [isLogin, setIsLogin] = useState<boolean>();
+    const [isLogin, setIsLogin] = useState<boolean>(false);
     const userId = localStorage.getItem("UserId");
     const userJwtToken = localStorage.getItem("JWTToken");
-    console.log(userId, userJwtToken);
 
     useEffect(() => {
         if (!userJwtToken || jwtTokenExpire(userJwtToken)) {
@@ -20,12 +19,14 @@ const App = () => {
             localStorage.removeItem("UserId");
             setIsLogin(false);
             navigate("/Login");
+        } else {
+            setIsLogin(true);
         }
-    }, []);
+    }, [userJwtToken, navigate]);
 
     return (
         <>
-            <UserContext.Provider value={{ isLogin,setIsLogin }} >
+            <UserContext.Provider value={{ isLogin, setIsLogin }}>
                 {isLogin && <Layout />}
                 <ToastContainer />
                 <Routes>
@@ -37,4 +38,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default App

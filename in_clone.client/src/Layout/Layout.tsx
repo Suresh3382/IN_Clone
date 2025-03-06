@@ -39,6 +39,7 @@ const Layout = () => {
             <div style={{ width: "13%" }}>
                 <Menu
                     defaultSelectedKeys={['/']}
+                    selectedKeys={[location.pathname]}
                     mode="inline"
                     items={items}
                     onClick={handleMenuClick}

@@ -4,4 +4,6 @@ export interface IUser {
     password: string;
     fullName: string;
     userName: string;
+    follower?:string;
+    following?:string;
 }

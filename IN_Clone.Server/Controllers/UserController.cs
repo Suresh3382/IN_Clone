@@ -21,7 +21,7 @@ namespace IN_Clone.Server.Controllers
         [HttpGet("GetUserbyId")]
         public async Task<User> GetUserbyId(String userId) =>
             await _userService.GetUserbyId(userId);
-            
+
 
         [HttpGet("GetAllUser")]
         public async Task<List<User>> GetAllUser() =>
@@ -32,8 +32,11 @@ namespace IN_Clone.Server.Controllers
         {
             var result = await _userService.FollowOrUnFollowUser(followerId, followingId);
             return Ok(result);
+        }
 
-            [HttpPost("FollowUser/{followerId}&{followingId}")]
-
+        [HttpGet("SearchBar")]
+        public async Task<List<User>> GetUserbySearch([FromQuery] string search) =>
+            await _userService.GetUserbySearch(search);
+        
     }
-    }
+}

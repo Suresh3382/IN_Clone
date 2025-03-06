@@ -1,4 +1,8 @@
-﻿using IN_Clone.Server.Models;
+﻿using System.Text.RegularExpressions;
+using IN_Clone.Server.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace IN_Clone.Server.Services
@@ -59,6 +63,20 @@ namespace IN_Clone.Server.Services
             }
 
             return new List<User> { follower, following };
+        }
+
+        public async Task<List<User>> GetUserbySearch(string? search = null)
+        {
+            if (!string.IsNullOrEmpty(search))
+            {
+                var regex = new BsonRegularExpression(search, "i");
+                var filter = Builders<User>.Filter.Regex("UserName", regex);
+                return await userModel.Find(filter).ToListAsync();
+            }
+            else
+            {
+                return new List<User>();
+            }
         }
     }
 }
