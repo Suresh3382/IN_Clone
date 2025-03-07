@@ -75,7 +75,8 @@ namespace IN_Clone.Server.Services
             }
             else
             {
-                return new List<User>();
+                var allUser = await userModel.Find(_ => true).ToListAsync();
+                return allUser; 
             }
         }
     }

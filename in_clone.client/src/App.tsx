@@ -26,7 +26,7 @@ const App = () => {
 
     return (
         <>
-            <UserContext.Provider value={{ isLogin, setIsLogin }}>
+            <UserContext.Provider value={{ isLogin, setIsLogin, userId, userJwtToken }}>
                 {isLogin && <Layout />}
                 <ToastContainer />
                 <Routes>
