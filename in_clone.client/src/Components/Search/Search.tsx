@@ -35,7 +35,8 @@ const Search = () => {
   const handleView = (user: IUser) => {
     setSearchUserDetails(user);
   }
-  const handleFollow = (userId: string) => {
+  const handleFollow = (userId: string, followingId: string) => {
+    axios.post(`'https://localhost:7024/api/User/FollowUser/${userId}&${followingId}'`)
   }
 
   return (
