@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     CompassFilled,
     HeartOutlined,
@@ -11,34 +11,42 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../AppRoutes/AppRoutes';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
     { key: '/', icon: <HomeFilled />, label: 'Home' },
-    { key: '2', icon: <SearchOutlined />, label: 'Search' },
-    { key: '3', icon: <CompassFilled />, label: 'Explore' },
-    { key: '4', icon: <PlayCircleOutlined />, label: 'Reel' },
-    { key: '5', icon: <MailOutlined />, label: 'Messages' },
-    { key: '6', icon: <HeartOutlined />, label: 'Notification' },
-    { key: '7', icon: <PlusSquareOutlined />, label: 'Create' },
-    { key: '8', icon: <UserOutlined />, label: 'Profile' },
+    { key: '/search', icon: <SearchOutlined />, label: 'Search' },
+    { key: '/explore', icon: <CompassFilled />, label: 'Explore' },
+    { key: '/reel', icon: <PlayCircleOutlined />, label: 'Reel' },
+    { key: '/messages', icon: <MailOutlined />, label: 'Messages' },
+    { key: '/notification', icon: <HeartOutlined />, label: 'Notification' },
+    { key: '/create', icon: <PlusSquareOutlined />, label: 'Create' },
+    { key: '/profile', icon: <UserOutlined />, label: 'Profile' },
 ];
 
 const Layout = () => {
+    const navigate = useNavigate();
+
+    const handleMenuClick = (e: { key: string }) => {
+        navigate(e.key);
+    };
 
     return (
         <div style={{ display: "flex" }}>
             <div style={{ width: "13%" }}>
                 <Menu
                     defaultSelectedKeys={['/']}
+                    selectedKeys={[location.pathname]}
                     mode="inline"
                     items={items}
+                    onClick={handleMenuClick}
                     style={{ height: '100vh' }}
                 />
             </div>
-            <div style={{ width: "87%", margin:"5px" }}>
+            <div style={{ width: "87%", margin: "5px" }}>
                 <AppRoutes />
             </div>
         </div>

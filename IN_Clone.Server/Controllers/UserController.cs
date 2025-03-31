@@ -1,43 +1,42 @@
 ﻿using IN_Clone.Server.Models;
 using IN_Clone.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IN_Clone.Server.Controllers
 {
+
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
         public UserServices _userService;
 
-        public UserController(UserServices userService) {
+        public UserController(UserServices userService)
+        {
             _userService = userService;
         }
 
-        [HttpPost("SignIn")]
-        public async Task<IActionResult> SignIn(User newuser)
+        [HttpGet("GetUserbyId")]
+        public async Task<User> GetUserbyId(String userId) =>
+            await _userService.GetUserbyId(userId);
+
+
+        [HttpGet("GetAllUser")]
+        public async Task<List<User>> GetAllUser() =>
+            await _userService.GetAllUser();
+
+        [HttpPost("FollowUser/{followerId}&{followingId}")]
+        public async Task<IActionResult> FollowUser(string followerId, string followingId)
         {
-            try
-            {
-                var result = await _userService.CreateUserAsync(newuser);
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = await _userService.FollowOrUnFollowUser(followerId, followingId);
+            return Ok(result);
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(Login loginuser)
-        {
-            var existingUser = await _userService.GetUserbyEmail(loginuser.Email);
-            if(existingUser != null && existingUser.Password == loginuser.Password)
-            {
-                return Ok(existingUser);
-            }
-            return BadRequest("Invalid User");
-        }
-   
+        [HttpGet("SearchBar")]
+        public async Task<List<User>> GetUserbySearch([FromQuery] string search) =>
+            await _userService.GetUserbySearch(search);
+        
     }
 }
